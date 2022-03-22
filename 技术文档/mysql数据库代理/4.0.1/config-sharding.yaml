@@ -1,0 +1,41 @@
+schemaName: wxy
+
+dataSources:
+ slave_ds_0:
+   url: jdbc:mysql://49.232.142.65:3306/wxy?serverTimezone=UTC&useSSL=false
+   username: wxy
+   password: wxy
+   connectionTimeoutMilliseconds: 30000
+   idleTimeoutMilliseconds: 60000
+   maxLifetimeMilliseconds: 1800000
+   maxPoolSize: 50
+   minPoolSize: 1
+ slave_ds_1:
+   url: jdbc:mysql://39.103.217.138:3306/wxy?serverTimezone=UTC&useSSL=false
+   username: wxy
+   password: wxy
+   connectionTimeoutMilliseconds: 30000
+   idleTimeoutMilliseconds: 60000
+   maxLifetimeMilliseconds: 1800000
+   maxPoolSize: 50
+   minPoolSize: 1
+
+shardingRule:
+ tables:
+   db_proxy:
+     actualDataNodes: slave_ds_${0..1}.db_proxy_${0..1} # 由数据源名 + 表名组成，以小数点分隔
+     tableStrategy:
+       inline:
+         shardingColumn: user_id
+         algorithmExpression: db_proxy_${user_id % 3}
+     keyGenerator: # 自增列值生成器配置，缺省表示使用默认自增主键生成器
+       type: SNOWFLAKE # 雪花算法
+       column: user_id
+ bindingTables:
+   - db_proxy
+ defaultDatabaseStrategy: # 分库策略，缺省表示使用默认分库策略
+   inline:
+     shardingColumn: user_id # 分片列名称
+     algorithmExpression: slave_ds_${user_id % 2} # 分片算法行表达式
+ defaultTableStrategy:
+   none:

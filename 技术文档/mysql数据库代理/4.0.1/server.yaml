@@ -1,0 +1,28 @@
+#orchestration:
+#  name: orchestration_ds
+#  overwrite: true
+#  registry:
+#    type: zookeeper
+#    serverLists: localhost:2181
+#    namespace: orchestration
+#
+authentication:
+ users:
+   wxy:
+     password: wxy 
+     authorizedSchemas: wxy
+
+props:
+ max.connections.size.per.query: 1
+ acceptor.size: 16  # The default value is available processors count * 2.
+ executor.size: 16  # Infinite by default.
+ proxy-frontend-flush-threshold: 128  # The default value is 128.
+ proxy-transaction-type: LOCAL
+ xa-transaction-manager-type: Atomikos
+ proxy-opentracing-enabled: true
+ proxy-hint-enabled: true
+ query.with.cipher.column: true
+ sql.show: true
+ check-table-metadata-enabled: true #在程序启动和更新时，是否检查分片元数据的结构一致性。
+ lock-wait-timeout-milliseconds: 50000 # The maximum time to wait for a lock
+ proxy-backend-query-fetch-size: -1
