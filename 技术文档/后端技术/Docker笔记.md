@@ -199,27 +199,17 @@ bed879327370: Pull complete
 ccc17412a00a: Pull complete 
 1f556ecc09d1: Pull complete 
 adc5528e468d: Pull complete 
-1afc286d5d53: Pull complete 
-6c724a59adff: Pull complete 
-0f2345f8b0a3: Pull complete 
-c8461a25b23b: Pull complete 
-3adb49279bed: Pull complete 
-77f22cd6c363: Pull complete 
 Digest: sha256:d45561a65aba6edac77be36e0a53f0c1fba67b951cb728348522b671ad63f926
 Status: Downloaded newer image for mysql:latest
 docker.io/library/mysql:latest //这个是具体的地址
 
 ```
 
-
-
 ### docker rmi 删除镜像
 
 ```shell
  docker rmi (IMAGE ID)
 ```
-
-
 
 ### docker images 查看镜像
 
@@ -752,6 +742,7 @@ docker run -d -p 5003:3306 -v /opt/mariadb/conf:/etc/mysql  -v /opt/mariadb/data
 ### 具名和匿名挂载
 
 ```shell
+docker run -d  --name nginx01 -p 5003:80 -v  /etc/nginx  nginx
 [root@VM-12-12-centos opt]# docker volume ls
 DRIVER    VOLUME NAME
 local     ab5edf37cc0549771eeb8d192273bd43db6c05a44fb148ae50780c0c7e580607
@@ -762,7 +753,7 @@ local     portainer_data
 # 具名挂载
 docker run -d -p 5004:80 --name nginx01 -v juming-nginx:/etc/nginx:rw nginx
 # 查看目录
-docker colume inspect juming-nginx
+docker inspect juming-nginx
 ```
 
 ### 多个容器内数据同步
@@ -807,7 +798,6 @@ docker build -f dockerfile文件的路径 -t 镜像名:版本号 .
 docker login -uwxy0715 -p
 docker push 镜像id
 ```
-
 
 
 
